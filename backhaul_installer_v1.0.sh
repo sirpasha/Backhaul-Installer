@@ -50,6 +50,10 @@ chmod +x /usr/local/bin/backhaul
 # Create backhaul config directory
 mkdir -p /etc/backhaul
 
+# Input custom config name
+read -p "Enter configuration name (without extension): " config_name
+config_file="/etc/backhaul/$config_name.toml"
+
 # Server/Client Selection
 echo -e "\e[1;33mSelect Server Type:\e[0m"
 echo -e "\e[1;36m1. Client [Kharej]\e[0m"
@@ -122,7 +126,6 @@ if [ "$client_server" == "server" ]; then
 fi
 
 # Generate config.toml based on user inputs
-config_file="/etc/backhaul/config.toml"
 echo -e "\e[1;32mGenerating configuration...\e[0m"
 if [[ "$client_server" == "client" ]]; then
     echo "[client]" > $config_file
@@ -148,17 +151,17 @@ else
     echo "connection_pool = $channel_pool" >> $config_file
 fi
 
-# Create service file
-service_file="/etc/systemd/system/backhaul.service"
+# Create service file with the same name as the config
+service_file="/etc/systemd/system/backhaul-$config_name.service"
 echo -e "\e[1;32mCreating service file...\e[0m"
 cat <<EOF > $service_file
 [Unit]
-Description=Backhaul Reverse Tunnel Service
+Description=Backhaul Reverse Tunnel Service ($config_name)
 After=network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/backhaul -c /etc/backhaul/config.toml
+ExecStart=/usr/local/bin/backhaul -c /etc/backhaul/$config_name.toml
 Restart=always
 RestartSec=3
 LimitNOFILE=1048576
@@ -167,11 +170,11 @@ LimitNOFILE=1048576
 WantedBy=multi-user.target
 EOF
 
-# Reload systemd and start service
-echo -e "\e[1;32mSetting up Backhaul service...\e[0m"
+# Reload systemd and start the new service
+echo -e "\e[1;32mSetting up Backhaul service ($config_name)...\e[0m"
 sudo systemctl daemon-reload
-sudo systemctl enable backhaul.service
-sudo systemctl start backhaul.service
+sudo systemctl enable backhaul-$config_name.service
+sudo systemctl start backhaul-$config_name.service
 
 # Show service status
-sudo systemctl status backhaul.service
+sudo systemctl status backhaul-$config_name.service
