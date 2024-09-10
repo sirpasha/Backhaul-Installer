@@ -7,5 +7,5 @@ This bash script allows you to install [Backhaul](https://github.com/Musixal/Bac
 # نکته مهم: از یوتیوبرهای عزیز خواهش میکنم از این اسکریپت استفاده نکنید!
 # Installation
 ~~~
-sudo wget https://raw.githubusercontent.com/sirpasha/Backhaul-Installer/main/backhaul_installer_v1.0.sh && chmod +x backhaul_installer_v1.0.sh && ./backhaul_installer_v1.0.sh
+sudo wget https://raw.githubusercontent.com/sirpasha/Backhaul-Installer/main/backhaul_installer_v1.1.sh && chmod +x backhaul_installer_v1.1.sh && ./backhaul_installer_v1.1.sh
 ~~~
