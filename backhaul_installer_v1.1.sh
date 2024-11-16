@@ -22,9 +22,9 @@ show_loading() {
 echo -e "\e[1;32mDetecting CPU architecture...\e[0m"
 ARCH=$(dpkg --print-architecture)
 if [[ "$ARCH" == "arm64" ]]; then
-    DOWNLOAD_URL="https://github.com/Musixal/Backhaul/releases/download/v0.6.2/backhaul_linux_arm64.tar.gz"
+    DOWNLOAD_URL="https://github.com/Musixal/Backhaul/releases/download/v0.6.3/backhaul_linux_arm64.tar.gz"
 elif [[ "$ARCH" == "amd64" ]]; then
-    DOWNLOAD_URL="https://github.com/Musixal/Backhaul/releases/download/v0.6.2/backhaul_linux_amd64.tar.gz"
+    DOWNLOAD_URL="https://github.com/Musixal/Backhaul/releases/download/v0.6.3/backhaul_linux_amd64.tar.gz"
 else
     echo "Unsupported architecture!"
     exit 1
